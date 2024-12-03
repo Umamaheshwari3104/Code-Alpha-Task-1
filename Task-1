@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGradeTracker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Integer> grades = new ArrayList<>();
+        boolean continueInput = true;
+
+        System.out.println("Welcome to the Student Grade Tracker!");
+
+        // Input grades
+        while (continueInput) {
+            System.out.print("Enter a student's grade (0-100): ");
+            int grade = scanner.nextInt();
+            if (grade >= 0 && grade <= 100) {
+                grades.add(grade);
+            } else {
+                System.out.println("Invalid grade! Please enter a value between 0 and 100.");
+            }
+
+            System.out.print("Do you want to add another grade? (yes/no): ");
+            String response = scanner.next().toLowerCase();
+            if (!response.equals("yes")) {
+                continueInput = false;
+            }
+        }
+
+        if (!grades.isEmpty()) {
+            // Compute statistics
+            int highest = findHighest(grades);
+            int lowest = findLowest(grades);
+            double average = calculateAverage(grades);
+
+            // Display results
+            System.out.println("\n--- Grade Statistics ---");
+            System.out.println("Grades: " + grades);
+            System.out.println("Average: " + average);
+            System.out.println("Highest: " + highest);
+            System.out.println("Lowest: " + lowest);
+        } else {
+            System.out.println("No grades were entered.");
+        }
+
+        scanner.close();
+    }
+
+    // Method to calculate the average
+    private static double calculateAverage(ArrayList<Integer> grades) {
+        int sum = 0;
+        for (int grade : grades) {
+            sum += grade;
+        }
+        return (double) sum / grades.size();
+    }
+
+    // Method to find the highest grade
+    private static int findHighest(ArrayList<Integer> grades) {
+        int highest = grades.get(0);
+        for (int grade : grades) {
+            if (grade > highest) {
+                highest = grade;
+            }
+        }
+        return highest;
+    }
+
+    // Method to find the lowest grade
+    private static int findLowest(ArrayList<Integer> grades) {
+        int lowest = grades.get(0);
+        for (int grade : grades) {
+            if (grade < lowest) {
+                lowest = grade;
+            }
+        }
+        return lowest;
+    }
+}
